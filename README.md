@@ -1,24 +1,25 @@
-# demo-01
+# 通用后台管理系统
 
-## Project setup
+技术栈：Vue2  element-ui  axios vuex
+
+## 第一步
+
+```
+cd demo-01
+```
+
+## 第二步
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 第三步
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 需要打包就执行这个
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
