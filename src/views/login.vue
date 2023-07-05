@@ -10,16 +10,14 @@
             type="tetx"
             v-model="loginInfo.user"
             placeholder="请输入账号"
-            style="width: 221px"
-          ></el-input>
+            style="width: 221px"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
             type="password"
             show-password
             v-model="loginInfo.password"
-            placeholder="请输入密码"
-          ></el-input>
+            placeholder="请输入密码"></el-input>
         </el-form-item>
         <div class="login_button">
           <el-button type="primary" @click="loginGo">登录</el-button>
@@ -36,8 +34,8 @@ export default {
   data() {
     return {
       loginInfo: {
-        user: '',
-        password: ''
+        user: 'admin',
+        password: 'admin'
       },
       rules: {
         user: [
@@ -64,45 +62,62 @@ export default {
   methods: {
     // 登录业务
     loginGo() {
-      this.$refs.loginInfo.validate((valid) => {
+      this.$refs.loginInfo.validate(valid => {
+        // 由于登录接口失效选择使用本地判断登录
+        // if (valid) {
+        //   this.$axios
+        //     .get('/api/login', {
+        //       params: {
+        //         username: this.loginInfo.user,
+        //         password: this.loginInfo.password
+        //       }
+        //     })
+        //     .then((res) => {
+        //       // console.log(res)
+        //       if (res.data.code === 400) {
+        //         // 登录失败
+        //         this.$message({
+        //           showClose: true,
+        //           message: '登录失败,请检查账号和密码！',
+        //           type: 'error',
+        //           duration: 2000,
+        //           center: true
+        //         })
+        //       } else {
+        //         // eslint-disable-next-line no-unused-vars
+        //         const cookie = localStorage.setItem('aa_cookie', 'aa-bb-cc')
+        //         // 登录成功
+        //         this.$message({
+        //           showClose: true,
+        //           message: '登录成功！',
+        //           type: 'success',
+        //           duration: 2000,
+        //           center: true
+        //         })
+        //         this.$router.push('/home')
+        //       }
+        //     })
+        //     .catch(() => {
+        //       console.log('接口请求失败')
+        //     })
+        // } else {
+        //   return false
+        // }
+
         if (valid) {
-          this.$axios
-            .get('/api/login', {
-              params: {
-                username: this.loginInfo.user,
-                password: this.loginInfo.password
-              }
-            })
-            .then((res) => {
-              // console.log(res)
-              if (res.data.code === 400) {
-                // 登录失败
-                this.$message({
-                  showClose: true,
-                  message: '登录失败,请检查账号和密码！',
-                  type: 'error',
-                  duration: 2000,
-                  center: true
-                })
-              } else {
-                // eslint-disable-next-line no-unused-vars
-                const cookie = localStorage.setItem('aa_cookie', 'aa-bb-cc')
-                // 登录成功
-                this.$message({
-                  showClose: true,
-                  message: '登录成功！',
-                  type: 'success',
-                  duration: 2000,
-                  center: true
-                })
-                this.$router.push('/home')
-              }
-            })
-            .catch(() => {
-              console.log('接口请求失败')
-            })
+          if (
+            this.loginInfo.user === 'admin' &&
+            this.loginInfo.password === 'admin'
+          ) {
+            // eslint-disable-next-line no-unused-vars
+            const cookie = localStorage.setItem('aa_cookie', 'aa-bb-cc')
+            this.$router.push('/home')
+            this.$message.success('登录成功')
+          } else {
+            this.$message.warning('账号或密码错误')
+          }
         } else {
-          return false
+          this.$message.warning('请输入账号和密码')
         }
       })
     },
